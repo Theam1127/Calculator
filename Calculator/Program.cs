@@ -19,8 +19,7 @@ static double Calculate(string calculation)
     while (calculation.Contains('('))
     {
         int firstBracketIndex = (calculation.Contains(") )") ? calculation.IndexOf('(') : calculation.LastIndexOf('(')) + 2;
-        string bracketCalculation = calculation.Substring(firstBracketIndex,
-            calculation.LastIndexOf(')') - 1 - firstBracketIndex);
+        string bracketCalculation = calculation[firstBracketIndex..(calculation.LastIndexOf(')') - 1)];
         calculation = calculation.Replace($"( {bracketCalculation} )", Calculate(bracketCalculation).ToString());
 
     }

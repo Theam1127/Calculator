@@ -16,14 +16,16 @@ while (true)
 
 static double Calculate(string calculation)
 {
-    string processedCalculation = calculation;
-    if (calculation.Contains('('))
+    while (calculation.Contains('('))
     {
-        string bracketCalculation = calculation.Substring(calculation.IndexOf('(') + 2, calculation.LastIndexOf(')') - 1 - (calculation.IndexOf('(') + 2));
-        processedCalculation = calculation.Replace($"( {bracketCalculation} )", Calculate(bracketCalculation).ToString());
+        int firstBracketIndex = (calculation.Contains(") )") ? calculation.IndexOf('(') : calculation.LastIndexOf('(')) + 2;
+        string bracketCalculation = calculation.Substring(firstBracketIndex,
+            calculation.LastIndexOf(')') - 1 - firstBracketIndex);
+        calculation = calculation.Replace($"( {bracketCalculation} )", Calculate(bracketCalculation).ToString());
+
     }
 
-    List<string> separatedCalculation = new(processedCalculation.Split(' '));
+    List<string> separatedCalculation = new(calculation.Split(' '));
     string[] mathSequence = new[] { "*", "/", "-", "+" };
     foreach (string symbol in mathSequence)
     {

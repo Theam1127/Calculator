@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Text.RegularExpressions;
+
 while (true)
 {
     try
@@ -18,10 +20,10 @@ static double Calculate(string calculation)
 {
     while (calculation.Contains('('))
     {
-        int firstBracketIndex = (calculation.Contains(") )") ? calculation.IndexOf('(') : calculation.LastIndexOf('(')) + 2;
-        string bracketCalculation = calculation[firstBracketIndex..(calculation.LastIndexOf(')') - 1)];
-        calculation = calculation.Replace($"( {bracketCalculation} )", Calculate(bracketCalculation).ToString());
-
+        Match extractMatch = Regex.Match(calculation, @"\(\s\-?[0-9](\.[0-9])?\s[\+\-\*\/]\s\-?[0-9](\.[0-9])?\s\)");
+        string extractCalculation = extractMatch.Value;
+        double matchCalculatedResult = Calculate(extractCalculation[(extractCalculation.IndexOf('(') + 2)..(extractCalculation.IndexOf(')') - 1)]);
+        calculation = calculation.Replace(extractCalculation, matchCalculatedResult.ToString());
     }
 
     List<string> separatedCalculation = new(calculation.Split(' '));

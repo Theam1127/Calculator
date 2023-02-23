@@ -2,9 +2,16 @@
 
 while (true)
 {
-    Console.Write("Enter Calculation: ");
-    string calculation = Console.ReadLine()!;
-    Console.WriteLine(string.Format("{0:0.##}", Calculate(calculation!)));
+    try
+    {
+        Console.Write("Enter Calculation: ");
+        string calculation = Console.ReadLine()!;
+        Console.WriteLine(string.Format("{0:0.##}", Calculate(calculation!)));
+    }
+    catch
+    {
+        Console.WriteLine("Invalid input!");
+    }
 }
 
 static double Calculate(string calculation)

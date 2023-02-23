@@ -20,7 +20,7 @@ static double Calculate(string calculation)
 {
     while (calculation.Contains('('))
     {
-        Match extractMatch = Regex.Match(calculation, @"\(\s\-?[0-9](\.[0-9])?\s[\+\-\*\/]\s\-?[0-9](\.[0-9])?\s\)");
+        Match extractMatch = Regex.Match(calculation, @"\(\s\-?[0-9]+(\.[0-9]+)?\s[\+\-\*\/]\s\-?[0-9]+(\.[0-9]+)?\s\)");
         string extractCalculation = extractMatch.Value;
         double matchCalculatedResult = Calculate(extractCalculation[(extractCalculation.IndexOf('(') + 2)..(extractCalculation.IndexOf(')') - 1)]);
         calculation = calculation.Replace(extractCalculation, matchCalculatedResult.ToString());

@@ -19,20 +19,17 @@ static double Calculate(string calculation)
     List<string> separatedCalculation = new(processedCalculation.Split(' '));
     Queue<string> expressionInSequence = new();
     string[] mathSequence = new[] { "*", "/", "-", "+" };
-    while (separatedCalculation.Any(x => mathSequence.Contains(x)))
+    foreach (string symbol in mathSequence)
     {
-        foreach (string symbol in mathSequence)
+        while (separatedCalculation.Any(x => x.Equals(symbol)))
         {
-            while (separatedCalculation.Any(x => x.Equals(symbol)))
-            {
-                int index = separatedCalculation.IndexOf(symbol);
-                string firstValue = separatedCalculation[index - 1];
-                string secondValue = separatedCalculation[index + 1];
-                double result = Compute(Convert.ToDouble(firstValue), Convert.ToDouble(secondValue), symbol);
-                separatedCalculation.RemoveAt(index + 1);
-                separatedCalculation.RemoveAt(index);
-                separatedCalculation[index - 1] = result.ToString();
-            }
+            int index = separatedCalculation.IndexOf(symbol);
+            string firstValue = separatedCalculation[index - 1];
+            string secondValue = separatedCalculation[index + 1];
+            double result = Compute(Convert.ToDouble(firstValue), Convert.ToDouble(secondValue), symbol);
+            separatedCalculation.RemoveAt(index + 1);
+            separatedCalculation.RemoveAt(index);
+            separatedCalculation[index - 1] = result.ToString();
         }
     }
     return Convert.ToDouble(separatedCalculation[0]);

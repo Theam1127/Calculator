@@ -17,7 +17,6 @@ static double Calculate(string calculation)
     }
 
     List<string> separatedCalculation = new(processedCalculation.Split(' '));
-    Queue<string> expressionInSequence = new();
     string[] mathSequence = new[] { "*", "/", "-", "+" };
     foreach (string symbol in mathSequence)
     {
